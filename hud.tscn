@@ -1,0 +1,62 @@
+[gd_scene load_steps=3 format=3 uid="uid://bpv48qtnqfswt"]
+
+[ext_resource type="Script" path="res://hud.gd" id="1_1bx1l"]
+[ext_resource type="FontFile" uid="uid://pfjxgf2w27py" path="res://fonts/Xolonium-Regular.ttf" id="2_vvw4j"]
+
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource("1_1bx1l")
+
+[node name="Score" type="Label" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 23.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("2_vvw4j")
+theme_override_font_sizes/font_size = 50
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Message" type="Label" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -240.0
+offset_top = -23.5
+offset_right = 240.0
+offset_bottom = 23.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("2_vvw4j")
+theme_override_font_sizes/font_size = 50
+text = "躲 避 蚬 钕"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="Start" type="Button" parent="."]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -100.0
+offset_top = -100.0
+offset_right = 100.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("2_vvw4j")
+theme_override_font_sizes/font_size = 50
+text = "前进吧，郭楠！"
+
+[node name="MessageTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[connection signal="pressed" from="Start" to="." method="_on_start_pressed"]
+[connection signal="timeout" from="MessageTimer" to="." method="_on_message_timer_timeout"]
