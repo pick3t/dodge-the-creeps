@@ -10,31 +10,65 @@ script = ExtResource("1_1bx1l")
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -20.0
-offset_right = 20.0
-offset_bottom = 23.0
+offset_left = -224.0
+offset_top = 8.0
+offset_right = -4.0
+offset_bottom = 69.0
 grow_horizontal = 2
 theme_override_fonts/font = ExtResource("2_vvw4j")
 theme_override_font_sizes/font_size = 50
-text = "0"
+text = "Score: 0"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Message" type="Label" parent="."]
+[node name="Life" type="Label" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 24.0
+offset_top = 8.0
+offset_right = 244.0
+offset_bottom = 69.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("2_vvw4j")
+theme_override_font_sizes/font_size = 50
+text = "Life: 0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Message1" type="Label" parent="."]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -240.0
-offset_top = -23.5
+offset_top = -104.0
 offset_right = 240.0
-offset_bottom = 23.5
+offset_bottom = -36.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_fonts/font = ExtResource("2_vvw4j")
 theme_override_font_sizes/font_size = 50
 text = "躲 避 蚬 钕"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="Message2" type="Label" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -240.0
+offset_top = 24.0
+offset_right = 240.0
+offset_bottom = 92.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("2_vvw4j")
+theme_override_font_sizes/font_size = 50
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2

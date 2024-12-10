@@ -4,6 +4,7 @@ signal hit
 
 @export var speed = 400 # How fast the player will move (pixels/sec).
 var screen_size # Size of the game window.
+var life
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -29,7 +30,7 @@ func _process(delta) -> void:
 		$AnimatedSprite2D.stop()
 	position += velocity * delta
 	position = position.clamp(Vector2.ZERO, screen_size)
-	
+
 	if velocity.x != 0:
 		$AnimatedSprite2D.animation = "walk"
 		$AnimatedSprite2D.flip_v = false
@@ -39,14 +40,18 @@ func _process(delta) -> void:
 		$AnimatedSprite2D.animation = "up"
 		$AnimatedSprite2D.flip_v = velocity.y > 0
 
-
 func _on_body_entered(body: Node2D) -> void:
-	hide() # Player disappears after being hit.
-	hit.emit()
-	# Must be deferred as we can't change physics properties on a physics callback.
-	$CollisionShape2D.set_deferred("disabled", true)
+	life -= 1
+	if life < 0:
+		hide() # Player disappears after being hit.
+		hit.emit()
+		# Must be deferred as we can't change physics properties on a physics callback.
+		$CollisionShape2D.set_deferred("disabled", true)
+	else:
+		return
 
 func start(pos):
+	life = 0
 	position = pos
 	show()
 	$CollisionShape2D.disabled = false

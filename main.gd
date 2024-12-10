@@ -11,13 +11,15 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	if gameStarted:
-		useScoreToCheat()
+		cheat()
+		getExtraLife()
 	pass
 
 func game_over() -> void:
 	$ScoreTimer.stop()
 	$MobTimer.stop()
-	$HUD.show_game_over()
+	$LifeTimer.stop()
+	$HUD.show_game_over(score)
 	gameStarted = false
 
 func new_game():
@@ -25,7 +27,8 @@ func new_game():
 	$Player.start($StartPosition.position)
 	$StartTimer.start()
 	$HUD.update_score(score)
-	$HUD.show_message("准备")
+	$HUD.update_life($Player.life)
+	$HUD.show_message1("准备")
 	clearAllMobs()
 	gameStarted = true
 
@@ -57,21 +60,34 @@ func _on_mob_timer_timeout():
 func _on_score_timer_timeout():
 	score += 1
 	if score >= 10:
-		$HUD.show_message("按e做龟男")
+		$HUD.show_message1("按e家暴")
 	$HUD.update_score(score)
 
 func _on_start_timer_timeout():
 	$MobTimer.start()
 	$ScoreTimer.start()
+	$LifeTimer.start()
+
+func _on_life_timer_timeout() -> void:
+	if score >= 10:
+		$HUD.show_message2("按c当龟公")
+	$HUD.update_life($Player.life)
 
 func clearAllMobs():
 	get_tree().call_group("mobs", "queue_free")
 
-func useScoreToCheat():
+func cheat():
 	if score <= 10:
 		return
 
 	if Input.is_action_pressed("e"):
 		clearAllMobs()
 		score -= 10
-		$HUD.update_score(score)
+
+func getExtraLife():
+	if score <= 10:
+		return
+
+	if Input.is_action_pressed("c"):
+		score -= 10
+		$Player.life += 1
