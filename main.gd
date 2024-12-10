@@ -2,6 +2,7 @@ extends Node
 
 @export var mob_scene: PackedScene
 var score
+var gameStarted = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -9,12 +10,15 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	if gameStarted:
+		useScoreToCheat()
 	pass
 
 func game_over() -> void:
 	$ScoreTimer.stop()
 	$MobTimer.stop()
 	$HUD.show_game_over()
+	gameStarted = false
 
 func new_game():
 	score = 0
@@ -22,7 +26,8 @@ func new_game():
 	$StartTimer.start()
 	$HUD.update_score(score)
 	$HUD.show_message("准备")
-	get_tree().call_group("mobs", "queue_free")
+	clearAllMobs()
+	gameStarted = true
 
 func _on_mob_timer_timeout():
 	# Create a new instance of the Mob scene.
@@ -51,8 +56,22 @@ func _on_mob_timer_timeout():
 
 func _on_score_timer_timeout():
 	score += 1
+	if score >= 10:
+		$HUD.show_message("按e做龟男")
 	$HUD.update_score(score)
 
 func _on_start_timer_timeout():
 	$MobTimer.start()
 	$ScoreTimer.start()
+
+func clearAllMobs():
+	get_tree().call_group("mobs", "queue_free")
+
+func useScoreToCheat():
+	if score <= 10:
+		return
+
+	if Input.is_action_pressed("e"):
+		clearAllMobs()
+		score -= 10
+		$HUD.update_score(score)
